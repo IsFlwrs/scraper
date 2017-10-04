@@ -171,60 +171,25 @@ class WebRequest:
         
 
     def post(self, params):
-
         params = urllib.parse.urlencode(params)
-        params = data.encode('ascii') # data should be bytes
+        params = params.encode('utf-8') # data should be bytes
         req = urllib.request.Request(self.url, params)
-        with urllib.request.urlopen(req) as response:
-            return response.read()
+        response = urllib.request.urlopen(req)
+        return response.read()
 
 
     
-
-
-
 '''
-a = WebRequest('https://jsonplacehol')
+    how to use:
 
-    a.get()
-
-#a = WebRequest('https://jsonplaceholder.typicode.com/posts')
-a.format_to_response = 'text/json'
-a.return_in_format()
-#print(a.response['body'])
-
-
-b = WebRequest('https://jsonplaceholder')
-
-
+    >>>
+        import web_request
+        url = 'http://jsonplaceholder.typicode.com'
+        obj = web_request.WebRequest(url)
+        obj.get()
+        values = {'userId':123}
+        obj.url = 'http://jsonplaceholder.typicode.com/posts'
+        obj.post(values)
+    
 '''
 
-'''
-
-url = 'https://jsonplaceholder.typicode.com/posts'
-values = {'userId' : 1}
-
-data = urllib.parse.urlencode(values)
-data = data.encode('ascii') # data should be bytes
-req = urllib.request.Request(url, data)
-with urllib.request.urlopen(req) as response:
-   the_page = response.read()
-   print(the_page)
-
-
-
-with urllib.request.urlopen(a) as response:
-   the_page = response.read()
-   print(the_page)
-'''
-
-
-'''
-import web_request
-a = web_request.WebRequest('https://jsonplaceholder.typicode.com/posts')
-a.format_to_response = 'text/json'
-values = {'userId':1}
-a.set_headers(values)
-a.post()
-
-'''
